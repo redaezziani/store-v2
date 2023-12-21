@@ -4,7 +4,7 @@ const productsRouter = express.Router();
 import { onlyAdmin } from '../middleware/admin.js';
 
 
-productsRouter.get('/', onlyAdmin, async (req, res) => {
+productsRouter.get('/', async (req, res) => {
     const connection = await createConnection();
     const [rows] = await connection.query('SELECT * FROM products');
     res.json({ products: rows });
@@ -13,7 +13,7 @@ productsRouter.get('/', onlyAdmin, async (req, res) => {
 });
 
 
-productsRouter.get('/get_by_id/:id',onlyAdmin, async (req, res) => {
+productsRouter.get('/get_by_id/:id', async (req, res) => {
     const connection = await createConnection();
     const { id } = req.params;
     console.log(id);
