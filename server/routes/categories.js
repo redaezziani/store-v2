@@ -40,7 +40,6 @@ categoriesRouter.put('/update/:id', async (req, res) => {
     try {
         const connection = await createConnection();
         const [rows] = await connection.query(`UPDATE categories SET name = '${req.body.name}' WHERE id = ${req.params.id}`);
-        // lets update the products table as well to reflect the new category name
         const [rows2] = await connection.query(`UPDATE products SET category = '${req.body.name}' WHERE category_id = ${req.params.id}`);
         res.send('Update successful');
     } catch (error) {
