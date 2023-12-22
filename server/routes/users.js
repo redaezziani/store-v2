@@ -111,8 +111,8 @@ usersRouter.get('/me', async (req, res) => {
         
       const payload = jwt.verify(token, 'reda');
       res.json({ user: payload });
-    } catch (error) {
-      console.error('Error decoding token:', error);
+    }
+    catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });

@@ -33,8 +33,9 @@ categoriesRouter.get('/get_all_products/:id', async (req, res) => {
 
 categoriesRouter.post('/add',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
-    const [rows] = await connection.query(`INSERT INTO categories (name) VALUES ('${req.body.name}')`);
-    res.send(rows);
+    const { category_name, category_image, category_desc } = req.body;
+    const [rows] = await connection.query(`INSERT INTO categories (category_name, category_image, category_desc) VALUES ('${category_name}', '${category_image}', '${category_desc}')`);
+    res.send("Category added successfully");
 }
 );
 

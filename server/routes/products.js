@@ -7,7 +7,7 @@ import { onlyAdmin } from '../middleware/admin.js';
 productsRouter.get('/', async (req, res) => {
     const connection = await createConnection();
     const [rows] = await connection.query('SELECT * FROM products');
-    res.json({ products: rows });
+    res.json(rows);
 
     
 });
