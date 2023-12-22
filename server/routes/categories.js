@@ -1,5 +1,7 @@
 import express from 'express';
 import createConnection from '../db/connection.js';
+import { onlyAdmin } from '../middleware/admin.js';
+
 const categoriesRouter = express.Router();
 
 
@@ -29,14 +31,14 @@ categoriesRouter.get('/get_all_products/:id', async (req, res) => {
 }
 );
 
-categoriesRouter.post('/add', async (req, res) => {
+categoriesRouter.post('/add',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
     const [rows] = await connection.query(`INSERT INTO categories (name) VALUES ('${req.body.name}')`);
     res.send(rows);
 }
 );
 
-categoriesRouter.put('/update/:id', async (req, res) => {
+categoriesRouter.put('/update/:id',onlyAdmin, async (req, res) => {
     try {
         const connection = await createConnection();
         const [rows] = await connection.query(`UPDATE categories SET name = '${req.body.name}' WHERE id = ${req.params.id}`);
@@ -48,7 +50,7 @@ categoriesRouter.put('/update/:id', async (req, res) => {
 });
 
 
-categoriesRouter.delete('/delete/:id', async (req, res) => {
+categoriesRouter.delete('/delete/:id',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
     const { id } = req.params;
     const [rows] = await connection.query(`DELETE FROM categories WHERE id = ${id}`);

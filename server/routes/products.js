@@ -16,9 +16,12 @@ productsRouter.get('/', async (req, res) => {
 productsRouter.get('/get_by_id/:id', async (req, res) => {
     const connection = await createConnection();
     const { id } = req.params;
-    console.log(id);
+    
     const [rows] = await connection.query(`SELECT * FROM products WHERE product_id = ${id}`);
-    res.send(rows);
+    if (rows.length === 0) {
+        res.status(404).send('Product not found');
+    }
+    res.json({ product: rows[0] });
 });
 
 
@@ -26,21 +29,21 @@ productsRouter.get('/get_by_id/:id', async (req, res) => {
 productsRouter.post('/add',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
     const [rows] = await connection.query(`INSERT INTO products (name, price) VALUES ('${req.body.name}', ${req.body.price})`);
-    res.send(rows);
+    res.send("Product added successfully");
 });
 
 
 productsRouter.put('/update/:id',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
     const [rows] = await connection.query(` UPDATE products SET name = '${req.body.name}', price = ${req.body.price} WHERE id = ${req.params.id}`);
-    res.send(rows);
+    res.send('Update successful');
 });
 
 productsRouter.delete('/delete/:id',onlyAdmin, async (req, res) => {
     const connection = await createConnection();
     const { id } = req.params;
     const [rows] = await connection.query(`DELETE FROM products WHERE id = ${id}`);
-    res.send(rows);
+    res.send('Delete successful');
 });
 
 

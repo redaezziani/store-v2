@@ -31,7 +31,7 @@ usersRouter.post('/register', upload.single('profile_image'), async (req, res) =
 
   try {
     const [result] = await connection.query(
-      'INSERT INTO users (user_name, email, password, role) VALUES (?, ?, ?, "user")',
+      'INSERT INTO users (user_name, email, password, role) VALUES (?, ?, ?, "admin")',
       [user_name, email, hashedPassword]
     );
 
