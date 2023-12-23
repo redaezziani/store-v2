@@ -17,7 +17,7 @@ const generateToken = (user) => {
     role: user.role,
     profile_image: user.image_profile,
   };
-  return jwt.sign(payload, 'reda', { expiresIn: '1h' });
+  return jwt.sign(payload, 'reda', { expiresIn: '2h' });
 };
 
 usersRouter.post('/register', upload.single('profile_image'), async (req, res) => {
@@ -31,7 +31,7 @@ usersRouter.post('/register', upload.single('profile_image'), async (req, res) =
 
   try {
     const [result] = await connection.query(
-      'INSERT INTO users (user_name, email, password, role) VALUES (?, ?, ?, "admin")',
+      'INSERT INTO users (user_name, email, password, role) VALUES (?, ?, ?, "user")',
       [user_name, email, hashedPassword]
     );
 
