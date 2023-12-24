@@ -35,7 +35,7 @@ categoriesRouter.get('/get_all_products/:id', async (req, res) => {
     try {
         const { id } = req.params;
         console.log(id);
-        const [rows] = await connection.query(`SELECT * FROM products WHERE categorie_id = ${id}`);
+        const [rows] = await connection.query(`SELECT * FROM products WHERE categorie_id = ${id} ORDER BY RAND()`);
         res.send(rows);
     } catch (error) {
         res.status(500).send('Error retrieving products by category ID');

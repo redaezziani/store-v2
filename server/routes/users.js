@@ -16,6 +16,7 @@ const generateToken = (user) => {
     user_name: user.user_name,
     role: user.role,
     profile_image: user.image_profile,
+    user_email: user.email,
   };
   return jwt.sign(payload, 'reda', { expiresIn: '2h' });
 };
